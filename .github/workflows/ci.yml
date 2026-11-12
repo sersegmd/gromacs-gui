@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Install Qt 6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.7.*'
+      - name: Build Rust core
+        run: cargo build --release --manifest-path core/rust/molecular_core/Cargo.toml
+      - name: Configure GUI
+        run: >
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          -DMS_CORE_LIB="$PWD/core/rust/molecular_core/target/release/libmolecular_core.so"
+      - name: Build GUI
+        run: cmake --build build -j$(nproc)
+      - name: Smoke test (screenshot harness)
+        run: ./build/molecular-studio --screenshot /tmp/smoke.png --shot-delay 800

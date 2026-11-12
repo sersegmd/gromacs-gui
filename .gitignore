@@ -1,0 +1,24 @@
+# Build directories
+build/
+build-*/
+cmake-build-*/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Compiled artifacts
+*.o
+*.so
+*.a
+molecular-studio
+
+# Qt
+CMakeLists.txt.user
+*.qrc.autogen
+
+# Rust (future core crate)
+core/target/
+Cargo.lock

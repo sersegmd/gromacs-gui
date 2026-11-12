@@ -1,0 +1,13 @@
+[package]
+name = "molecular_core"
+version = "0.2.0"
+edition = "2021"
+description = "Molecular Studio core engine: GROMACS command catalog, job runner, file parsers (C ABI)"
+
+[lib]
+name = "molecular_core"
+crate-type = ["cdylib"]
+
+[dependencies]
+# Intentionally empty — the core uses only the Rust standard library so it
+# builds offline and keeps the FFI surface dependency-free.
